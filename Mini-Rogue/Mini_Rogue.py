@@ -72,6 +72,11 @@ while player.getHP() > 0:
 
     clearScreen()
 
+    if endOfLevel:
+        player.bossRoom = True
+        player.enterRoom("Monster")
+        
+    player.bossRoom = False
     #increase room value
     player.nextRoom()
     print("You've Reached the end of this room. Well done")

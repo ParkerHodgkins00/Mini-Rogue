@@ -14,6 +14,33 @@ class Player_C(object):
         self.level = level
         self.room = room
         self.beatenMonster = False
+        self.bossRoom = False
+        self.levelToXPBase = {
+            1: 1,
+            2: 1,
+            3: 2,
+            4: 2,
+            5: 3
+        }
+        self.levelToDamageBoss = {
+            1: 3,
+            2: 5,
+            3: 7,
+            4: 9,
+            5: 12
+        }
+        self.levelToXPBoss = {
+            1: 2,
+            2: 3,
+            3: 4,
+            4: 5
+        }
+        self.levelToCoinBoss = {
+            1: 2,
+            2: 2,
+            3: 3,
+            4: 3
+        }
 
     def __str__(self):
         return f"Armor: {self.armor}    HP: {self.hp}   Gold: {self.gold}   Food: {self.food}   XP: {self.xp}   Rank: {self.rank} \n" \
@@ -410,16 +437,32 @@ class Player_C(object):
 
         
         if self.hp > 0:
-            if self.level == 1:
-                self.addXP(1)
-            elif self.level == 2:
-                self.addXP(1)
-            elif self.level == 3:
-                self.addXP(2)
-            elif self.level == 4:
-                self.addXP(2)
-            elif self.level == 5:
-                self.addXP(3)
+            if self.bossRoom == False:
+                self.addXP(self.levelToXPBase[self.level])
+                
+            else:
+                self.addXP(self.levelToXPBase[self.level])
+                self.addGold(self.levelToCoinBoss[self.level])
+                treasure = random.randint(1,6)
+                if treasure == 1:
+                    print("It dropped a better shield! (+1 Armor)")
+                    self.addArmor(1)
+                elif treasure == 2:
+                    print("It dropped a better sword! (+2 XP)")
+                    self.addXP(2)
+                elif treasure == 3:
+                    print("It dropped a scroll of Fireball!")
+                    self.addSpell("Fireball")
+                elif treasure == 4:
+                    print("It dropped a scroll of Ice!")
+                    self.addSpell("Ice")
+                elif treasure == 5:
+                    print("It dropped a scroll of Poison!")
+                    self.addSpell("Poison")
+                elif treasure == 6:
+                    print("It dropped a scroll of Healing!")
+                    self.addSpell("Healing")
+            
 
             self.beatenMonster = True
         return
@@ -427,10 +470,17 @@ class Player_C(object):
 
     def enterRoom(self, roomName):
         if roomName == "Monster":
-            r = random.randint(1, 6)
-            mhp = self.room + r
-            mdmg = self.level * 2
-            self.monsterRoom(mhp, mdmg)
+            if self.bossRoom == False:
+                r = random.randint(1, 6)
+                mhp = self.room + r
+                mdmg = self.level * 2
+                self.monsterRoom(mhp, mdmg)
+                
+            else:
+                mdmg = self.levelToDamageBoss[self.level]
+                mhp = (self.level + 1) * 5
+                self.monsterRoom(mhp, mdmg)
+                    
             input("Press Enter to Continue... ")
 
         elif roomName == "Treasure":
