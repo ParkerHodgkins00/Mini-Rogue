@@ -115,6 +115,18 @@ class Player_C(object):
         if self.armor < 0:
             self.armor = 0
 
+    def setArmor(self, a):
+        self.armor = a
+    
+    def setFood(self, f):
+        self.food = f
+
+    def setGold(self, g):
+        self.gold = g
+
+    def setHP(self, h):
+        self.hp = h
+
     def addXP(self, x):
         self.xp += x
         if self.xp < 0:
@@ -352,11 +364,13 @@ class Player_C(object):
         elif rolledEvent == 4:
             self.addArmor(1)
         elif rolledEvent == 5:
+            time.sleep(self.stallTime + 1)
             self.enterRoom("Monster")
             
+            
         
-        
-        input("Press Enter to Continue... ")
+        if rolledEvent != 5:
+            input("Press Enter to Continue... ")
         return
 
     def trapRoom(self):
