@@ -60,7 +60,7 @@ class Player_C(object):
         }
 
     def __str__(self):
-        return f"Armor: {self.armor}    HP: {self.hp}   Gold: {self.gold}   Food: {self.food}   XP: {self.xp}   Rank: {self.rank} \n" \
+        return f"Armor: {self.armor}/5    HP: {self.hp}/20   Gold: {self.gold}/20   Food: {self.food}/6   XP: {self.xp}   Rank: {self.rank} \n" \
             f"Spell1: {self.spell1} Spell2: {self.spell2} \n" \
             f"Floor: {self.level}   Area: {self.room} \n"
 
@@ -81,9 +81,9 @@ class Player_C(object):
             return self.getInput(options)
 
     def printSelf(self):
-        print(f"Armor: {self.armor}    HP: {self.hp}   Gold: {self.gold}   Food: {self.food}   XP: {self.xp}   Rank: {self.rank} \n" \
-            f"Spell1: {self.spell1} Spell2: {self.spell2} \n" \
-            f"Floor: {self.level}   Area: {self.room} \n")
+        print(f"Armor: {self.armor}/5    HP: {self.hp}/20   Gold: {self.gold}/20   Food: {self.food}/6   XP: {self.xp}   Rank: {self.rank} \n" \
+            f"Spell1: {self.spell1}    Spell2: {self.spell2} \n" \
+            f"Floor: {self.level}    Area: {self.room} \n")
 
     def clearScreen(self):
         print("\n"*50)
@@ -92,6 +92,9 @@ class Player_C(object):
         self.gold += g
         if self.gold < 0:
             self.gold = 0
+
+        if self.gold > 20:
+            self.gold = 20
 
     def nextRoom(self):
         self.room += 1
@@ -116,6 +119,9 @@ class Player_C(object):
         self.armor += a
         if self.armor < 0:
             self.armor = 0
+
+        if self.armor > 5:
+            self.armor = 5
 
     def setArmor(self, a):
         self.armor = a
@@ -150,8 +156,13 @@ class Player_C(object):
         if self.food < 0:
             self.food = 0
 
+        if self.food > 6:
+            self.food = 6
+
     def addHP(self, h):
         self.hp += h
+        if self.hp > 20:
+            self.hp = 20
 
     def getHP(self):
         return self.hp
