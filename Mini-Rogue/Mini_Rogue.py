@@ -30,8 +30,33 @@ clearScreen()
 roomCards = np.array(["Monster", "Treasure", "Merchant", "Rest Area", "Random Event", "Trap"])
 # armor, hp, gold, food, xp, rank, spell1, spell2, level, room
 player = Player_C(0, 5, 3, 6, 0, 1, "", "", 1, 1)
-scrollPrint("Welcome to Mini Rogue! Are you ready to begin?!")
-input("Press Enter To Continue...  ")
+scrollPrint("Welcome to Mini Rogue! What style of play would you like?")
+print("                Armor    HP    Gold    Food")
+print("1. Casual         1       5      5       6")
+print("2. Normal         0       5      3       6")
+print("3. Hard           0       4      2       5")
+print("4. Impossible     0       3      1       3")
+inp = getInput(["1", "2", "3", "4"])
+if inp == 1:
+    player.armor = 1
+    player.hp = 5
+    player.gold = 5
+    player.food = 6
+elif inp == 2:
+    player.armor = 0
+    player.hp = 5
+    player.gold = 3
+    player.food = 6
+elif inp == 3:
+    player.armor = 0
+    player.hp = 4
+    player.gold = 2
+    player.food = 5
+elif inp == 4:
+    player.armor = 0
+    player.hp = 3
+    player.gold = 1
+    player.food = 3
 
 #scrollPrint(player)
 #player.enterRoom("Monster")
