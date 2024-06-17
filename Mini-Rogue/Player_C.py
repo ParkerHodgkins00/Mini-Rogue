@@ -245,7 +245,7 @@ class Player_C(object):
             self.printSelf()
             self.scrollPrint("You've stumbled upon a merchant down here... how odd...")
             time.sleep(self.stallTime)
-            self.scrollPrint("What would you like to buy? \n")
+            print("What would you like to buy? \n")
             time.sleep(self.stallTime)
             print("1. Ration / 1 Gold (Gain 1 Food)")
             print("2. Health Potion / 1 Gold (Gain 1 HP)")
@@ -257,23 +257,35 @@ class Player_C(object):
             inp = self.getInput(["1", "2", "3", "4", "5", "6"])
             if inp == "1":
                 if self.gold >= 1:
+                    self.scrollPrint("This meat looks off... but for the price you can't complain")
                     self.addFood(1)
                     self.addGold(-1)
+                else:
+                    self.scrollPrint("Insufficient Gold")
 
             elif inp == "2":
                 if self.gold >= 1:
+                    self.scrollPrint("The small vial gives you some of your strength back")
                     self.addHP(1)
                     self.addGold(-1)
+                else:
+                    self.scrollPrint("Insufficient Gold")
 
             elif inp == "3":
                 if self.gold >= 3:
+                    self.scrollPrint("Now THAT is a health potion!")
                     self.addHP(4)
                     self.addGold(-3)
+                else:
+                    self.scrollPrint("Insufficient Gold")
 
             elif inp == "4":
                 if self.gold >= 6:
+                    self.scrollPrint("Is that blood on those bracers? I'm sure it's nothing")
                     self.addArmor(1)
                     self.addGold(-6)
+                else:
+                    self.scrollPrint("Insufficient Gold")
 
             elif inp == "5":
                 if self.gold >= 8:
@@ -287,13 +299,17 @@ class Player_C(object):
                         self.addSpell("Poison")
                     elif inp2 == "4":
                         self.addSpell("Healing")
-                    else:
-                        self.addGold(8)
+                    
+                    self.scrollPrint("Perhaps this will come in useful later")
 
                     self.addGold(-8)
+                else:
+                    self.scrollPrint("Insufficient Gold")
 
             elif inp == "6":
                 break
+
+            time.sleep(self.stallTime + 1)
 
         return
 
@@ -506,12 +522,17 @@ class Player_C(object):
                     spellCast = ""
 
                 if spellCast == "Fireball":
+                    self.scrollPrint("The room is engulfed in flames! The monster takes 8 damage")
                     mHealth -= 8
                 elif spellCast == "Ice":
+                    self.scrollPrint("An icy shard is shot from your hand, piercing the monster's heart")
+                    self.scrollPrint("It slows down, giving you time to attack again")
                     monsterFrozen = True
                 elif spellCast == "Poison":
+                    self.scrollPrint("A bubble of poison floats toward the creature before popping. It looks like it will take damage for the rest of the encounter")
                     monsterPoisoned += 1
                 elif spellCast == "Healing":
+                    self.scrollPrint("You feel rejuvenated. You gain 8 health")
                     self.addHP(8)
 
             if mHealth > 0 and monsterFrozen == False:

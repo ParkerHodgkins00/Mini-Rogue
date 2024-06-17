@@ -126,6 +126,7 @@ while player.getHP() > 0:
 
     if endOfLevel:
         scrollPrint("The Guardian of this floor lies ahead. Press Enter to begin the Fight!")
+        input("")
         player.bossRoom = True
         player.enterRoom("Monster")
         
