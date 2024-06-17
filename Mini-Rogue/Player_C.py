@@ -66,7 +66,7 @@ class Player_C(object):
 
     def scrollPrint(self, s):
         for ch in s:
-            time.sleep(0.02)
+            time.sleep(0.03)
             print(ch, end='')
             
         print("")
