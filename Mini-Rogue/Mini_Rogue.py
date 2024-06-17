@@ -83,7 +83,7 @@ elif inp == "4":
 
 #scrollPrint(player)
 #player.enterRoom("Monster")
-while player.getHP() > 0:
+while player.getHP() > 0 and player.room < 15:
     scrollPrint(f"You are now entering area {player.room}")
     time.sleep(1.5)
     clearScreen()
@@ -167,4 +167,11 @@ while player.getHP() > 0:
     if player.getHP() <= 0:
         print("You have failed your quest. Good Bye")
         break
+
+    elif player.room > 14:
+        print("Congratulations! You have beaten all 5 bosses!")
     scrollPrint("You've Reached the end of this Area. Well done")
+
+
+if player.getHP() <= 0:
+    scrollPrint("You have fallen in your quest. Better luck next time")
