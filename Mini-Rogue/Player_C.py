@@ -70,6 +70,15 @@ class Player_C(object):
             print(ch, end='')
             
         print("")
+    
+    def getInput(self, options):
+        inp = input("Your Choice: ")
+        if inp in options:
+            return inp
+
+        else:
+            print("Invalid Option")
+            return self.getInput(options)
 
     def printSelf(self):
         print(f"Armor: {self.armor}    HP: {self.hp}   Gold: {self.gold}   Food: {self.food}   XP: {self.xp}   Rank: {self.rank} \n" \
@@ -142,7 +151,8 @@ class Player_C(object):
         elif self.spell2 =="":
             self.spell2 = s
         else:
-            inp = input(f"Remove Spell? 1. {self.spell1}    2. {self.spell2}    3. No")
+            print(f"Remove Spell? 1. {self.spell1}    2. {self.spell2}    3. No")
+            inp = self.getInput(["1", "2", "3"])
             if inp == "1":
                 self.spell1=""
                 self.addSpell(s)
@@ -232,7 +242,7 @@ class Player_C(object):
             print("5. Any Spell / 8 Gold")
             print("6. Leave")
         
-            inp = input("Your Choice: ")
+            inp = self.getInput(["1", "2", "3", "4", "5", "6"])
             if inp == "1":
                 if self.gold >= 1:
                     self.addFood(1)
@@ -256,7 +266,7 @@ class Player_C(object):
             elif inp == "5":
                 if self.gold >= 8:
                     self.scrollPrint("Which spell? 1. Fireball  2. Ice  3. Poison   4. Healing")
-                    inp2 = input("Your Choice: ")
+                    inp2 = self.getInput(["1","2","3","4"])
                     if inp2 == "1":
                         self.addSpell("Fireball")
                     elif inp2 == "2":
@@ -283,7 +293,7 @@ class Player_C(object):
         self.scrollPrint("1. Sharpen Your Weapons (+1 XP)")
         self.scrollPrint("2. Search for Rations (+1 Food)")
         self.scrollPrint("3. Heal (+2 HP)")
-        inp = input("Your Choice: ")
+        inp = self.getInput(["1", "2", "3"])
 
         if inp == "1":
             self.scrollPrint("You've made your weapon even more deadly!")
@@ -311,7 +321,7 @@ class Player_C(object):
     def eventRoom(self):
         self.clearScreen()
         self.printSelf()
-        events = ["Find a Ration (+1 Food)", "Find a Health Potion (+2 HP)", "Find some Loot (+2 Gold)", "Find a Better Sword (+2 XP)", "Find a  Shield (+1 Armor)", " Encountered a monster!!!"]
+        events = ["Find a Ration (+1 Food)", "Find a Health Potion (+2 HP)", "Find some Loot (+2 Gold)", "Find a Better Sword (+2 XP)", "Find a  Shield (+1 Armor)", " Encounter a monster!!!"]
         rolledEvent = random.randint(0, 5)
         self.scrollPrint(f"You {events[rolledEvent]}")
         time.sleep(self.stallTime)
@@ -319,7 +329,8 @@ class Player_C(object):
         time.sleep(self.stallTime)
         optionA = self.eventAdjustment(rolledEvent - 1)
         optionB = self.eventAdjustment(rolledEvent + 1)
-        inp = input(f"1. {events[optionA]} 2. {events[optionB]} 3. {events[rolledEvent]} \n")
+        print(f"1. Try to {events[optionA]} 2. Try to {events[optionB]} 3. {events[rolledEvent]} \n")
+        inp = self.getInput(["1", "2", "3"])
         
         if inp == "1":
             if self.skillCheck():
@@ -328,7 +339,8 @@ class Player_C(object):
         elif inp == "2":
             if self.skillCheck():
                 rolledEvent = optionB
-
+        
+        self.scrollPrint("You" + " " + events[rolledEvent])
         if rolledEvent == 0:
             self.addFood(1)
         elif rolledEvent == 1:
@@ -342,7 +354,7 @@ class Player_C(object):
         elif rolledEvent == 5:
             self.enterRoom("Monster")
             
-        self.scrollPrint("You" + " " + events[rolledEvent])
+        
         
         input("Press Enter to Continue... ")
         return
@@ -441,7 +453,7 @@ class Player_C(object):
                     if rolledDice[i][len(rolledDice[i]) - 1] == 6:
                         self.scrollPrint(f"Die {i+1} is a crit. Would you like to roll again?")
                         self.scrollPrint("1. Yes   2. No")
-                        inp = input("Your Choice: ")
+                        inp = self.getInput(["1", "2"])
                         if inp == "1":
                             diceRoll = random.randint(1, 6)
                             rolledDice[i].append(diceRoll)
@@ -466,7 +478,7 @@ class Player_C(object):
             if self.spell1 != "" or self.spell2 != "":
                 self.scrollPrint("Would you like to cast a spell?")
                 self.scrollPrint(f"1. {self.spell1}    2.{self.spell2} 3. No Spell")
-                inp = input("Your Choice: ")
+                inp = self.getInput(["1", "2", "3"])
                 spellCast = ""
                 if inp == "1":
                     spellCast = self.spell1

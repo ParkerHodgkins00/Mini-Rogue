@@ -16,7 +16,14 @@ def scrollPrint(s):
         
     print('')
     
+def getInput(options):
+    inp = input("Your Choice: ")
+    if inp in options:
+        return inp
 
+    else:
+        print("Invalid Option")
+        return getInput(options)
 
 clearScreen()
 
@@ -54,7 +61,7 @@ while player.getHP() > 0:
     print(player)
     scrollPrint("Two Rooms Lie Before You. Which would you like to enter?")
     scrollPrint(f"1. {roomCards[1]} 2. {roomCards[2]}")
-    inp = input("Your Choice: ")
+    inp = getInput(["1", "2"])
     if inp == "1":
         player.enterRoom(roomCards[1])
     else:
@@ -78,7 +85,7 @@ while player.getHP() > 0:
     print(player)
     scrollPrint("Two Rooms Lie Before You. Which would you like to enter?")
     scrollPrint(f"1. {roomCards[4]} 2. {roomCards[5]}")
-    inp = input("Your Choice: ")
+    inp = getInput(["1", "2"])
     if inp == "1":
         player.enterRoom(roomCards[4])
     else:
@@ -89,7 +96,7 @@ while player.getHP() > 0:
 
     clearScreen()
     print(player)
-    input("Press Enter to Continue To the next Room...")
+    #input("Press Enter to Continue To the next Room...")
     clearScreen()
 
     if endOfLevel:
