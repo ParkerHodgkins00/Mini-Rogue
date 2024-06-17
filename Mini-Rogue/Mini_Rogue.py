@@ -5,7 +5,6 @@ import array
 import numpy as np
 import time
 
-
 def clearScreen():
     print("\n"*50)
     
@@ -25,11 +24,35 @@ def getInput(options):
         print("Invalid Option")
         return getInput(options)
 
+player = Player_C(1, 5, 3, 6, 0, 1, "", "", 1, 1)
+
+def healingSpell():
+    if player.spell1 == "Healing" or player.spell2 == "Healing":
+        scrollPrint("Would you like to use your healing spell?")
+        print("1. Yes    2. No")
+        inp = getInput(["1", "2"])
+        if inp == "1":
+            if player.spell1 == "Healing":
+                scrollPrint("You Feel Rejuvenated. You Gain 8 HP")
+                player.addHP(8)
+            elif player.spell2 == "Healing":
+                scrollPrint("You Feel Rejuvenated. You Gain 8 HP")
+                player.addHP(8)
+
+            else:
+                scrollPrint("Well this is awkward... apparently you don't have a healing spell???")
+
+        else:
+            return
+
+    else:
+        return
+
 clearScreen()
 
 roomCards = np.array(["Monster", "Treasure", "Merchant", "Rest Area", "Random Event", "Trap"])
 # armor, hp, gold, food, xp, rank, spell1, spell2, level, room
-player = Player_C(1, 5, 3, 6, 0, 1, "", "", 1, 1)
+
 scrollPrint("Welcome to Mini Rogue! What style of play would you like?")
 print("                Armor    HP    Gold    Food")
 print("1. Casual         1       5      5       6")
@@ -62,6 +85,10 @@ elif inp == "4":
 #player.enterRoom("Monster")
 while player.getHP() > 0:
     scrollPrint(f"You are now entering area {player.room}")
+    time.sleep(1.5)
+    clearScreen()
+    print(player)
+    healingSpell()
     input("Press Enter to enter the first room...")
     clearScreen()
     #Phases of Play
@@ -84,6 +111,7 @@ while player.getHP() > 0:
 
     #Reveal next 2 Cards and pick 1
     print(player)
+    healingSpell()
     scrollPrint("Two Rooms Lie Before You. Which would you like to enter?")
     scrollPrint(f"1. {roomCards[1]} 2. {roomCards[2]}")
     inp = getInput(["1", "2"])
@@ -96,6 +124,7 @@ while player.getHP() > 0:
         break
     clearScreen()
     print(player)
+    healingSpell()
     input("Press Enter to Continue To the next Room...")
     clearScreen()
 
@@ -108,6 +137,7 @@ while player.getHP() > 0:
 
     #Reveal next 2 and pick 1
     print(player)
+    healingSpell()
     scrollPrint("Two Rooms Lie Before You. Which would you like to enter?")
     scrollPrint(f"1. {roomCards[4]} 2. {roomCards[5]}")
     inp = getInput(["1", "2"])
@@ -121,6 +151,7 @@ while player.getHP() > 0:
 
     clearScreen()
     print(player)
+    healingSpell()
     #input("Press Enter to Continue To the next Room...")
     clearScreen()
 

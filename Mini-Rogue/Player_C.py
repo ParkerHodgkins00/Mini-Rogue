@@ -96,8 +96,10 @@ class Player_C(object):
     def nextRoom(self):
         self.room += 1
         if self.food > 0:
+            self.scrollPrint("You feel hungry and dig into your rations (-1 food)")
             self.addFood(-1)
         else:
+            self.scrollPrint("You are out of food. Your health begins to fall (-2 Health)")
             self.addHP(-2)
         self.beatenMonster = False
         if self.room == 3:
@@ -196,6 +198,11 @@ class Player_C(object):
     def treasureRoom(self):
         self.clearScreen()
         self.printSelf()
+        print("    _________")
+        print("   /_|_____|_\ ")
+        print("   '. \   / .'")
+        print("     '.\ /.'")
+        print("       '.'")
         self.scrollPrint("You've stumbled upon an old treasure room")
         time.sleep(self.stallTime)
         #If you have beaten a monster, you gain 2 gold, otherwise you gain 1
@@ -243,6 +250,12 @@ class Player_C(object):
         while True:
             self.clearScreen()
             self.printSelf()
+            print("       .-''-.")
+            print("      /-.{}  \\")
+            print("      | _\__.|")
+            print("      \\/^)^ \\/")
+            print("       \ =  /")
+            print("  .---./`--`\.--._")
             self.scrollPrint("You've stumbled upon a merchant down here... how odd...")
             time.sleep(self.stallTime)
             print("What would you like to buy? \n")
@@ -316,6 +329,14 @@ class Player_C(object):
     def restingRoom(self):
         self.clearScreen()
         self.printSelf()
+        print("        ______")
+        print("       /     /\\")
+        print("      /     /  \\")
+        print("     /_____/----\\_    (  ")
+        print("    \"     \"          ).  ")
+        print("                  o (:') o   ")
+        print("                 o ~/~~\\~ o   ")
+        print("                  o  o  o")
         self.scrollPrint("Finally... a moment for rest. What would you like to do? \n")
         time.sleep(self.stallTime)
         self.scrollPrint("1. Sharpen Your Weapons (+1 XP)")
@@ -351,6 +372,57 @@ class Player_C(object):
         self.printSelf()
         events = ["Find a Ration (+1 Food)", "Find a Health Potion (+2 HP)", "Find some Loot (+2 Gold)", "Find a Better Sword (+2 XP)", "Find a  Shield (+1 Armor)", " Encounter a monster!!!"]
         rolledEvent = random.randint(0, 5)
+        if rolledEvent == 0:
+            print(" ,--./,-.")
+            print("/,-._.--~\\")
+            print(" __}  {")
+            print("\\`-._,-`-,")
+            print(" `._,._,'")
+
+        elif rolledEvent == 1:
+            print("_____")
+            print("\\   /")
+            print("/   \\")
+            print("|~~~|")
+            print("|   |")
+            print(" \\_/")
+
+        elif rolledEvent == 2:
+            print("         __________")
+            print("        /\\____;;___\\")
+            print("       | /         /")
+            print("       `. ())oo() .")
+            print("        |\\(%()*^^()^\\")
+            print("       %| |-%-------|")
+            print("      % \ | %  ))   |")
+            print("      %  \|%________|")
+
+        elif rolledEvent == 3:
+            print("            /\\")
+            print("/vvvvvvvvvvvv \\--------------------------------------,")
+            print("`^^^^^^^^^^^^ /=====================================\"")
+            print("            \\/")
+
+        elif rolledEvent == 4:
+            print("  |`-._/\_.-`|")
+            print("  |    ||    |")
+            print("  |___o()o___|")
+            print("  |__((<>))__|")
+            print("  \\   o\/o   /")
+            print("   \\   ||   /")
+            print("    \\  ||  /")
+            print("     '.||.'")
+            print("       ``")
+
+        elif rolledEvent == 5:
+            print("  _.---._")
+            print(".'       `.")
+            print(":)       (:")
+            print("\\ (@) (@) /")
+            print(" \\   A   /")
+            print("  )     (")
+            print("  \\-----/")
+            print("   `._.'")
         self.scrollPrint(f"You {events[rolledEvent]}")
         time.sleep(self.stallTime)
         self.scrollPrint("You have a chance to change fate. Would you like to try?")
@@ -451,6 +523,23 @@ class Player_C(object):
 
         return _sum
 
+    def critFunc(self, a):
+        while self.critCheck(a):
+            for i in range(0, len(a)):
+                if a[i][len(a[i]) - 1] == 6:
+                    self.scrollPrint(f"Die {i+1} is a crit. Would you like to roll again?")
+                    self.scrollPrint("1. Yes   2. No")
+                    inp = self.getInput(["1", "2"])
+                    if inp == "1":
+                        diceRoll = random.randint(1, 6)
+                        a[i].append(diceRoll)
+                        i = 0
+
+                    else:
+                        a[i].append(0)
+
+                    self.scrollPrint(a)
+        return a
 
     def monsterRoom(self, monsterHealth, damage):
         self.clearScreen()
@@ -461,6 +550,14 @@ class Player_C(object):
         while(mHealth > 0 and self.hp > 0):
             
             self.printSelf()
+            print("  _.---._")
+            print(".'       `.")
+            print(":)       (:")
+            print("\\ (@) (@) /")
+            print(" \\   A   /")
+            print("  )     (")
+            print("  \\-----/")
+            print("   `._.'")
             print(f"Monster Health: {mHealth}")
             time.sleep(self.stallTime)
             monsterFrozen = False
@@ -478,21 +575,48 @@ class Player_C(object):
             time.sleep(self.stallTime)
         
             #Reroll anycrits
-            while self.critCheck(rolledDice):
-                for i in range(0, len(rolledDice)):
-                    if rolledDice[i][len(rolledDice[i]) - 1] == 6:
-                        self.scrollPrint(f"Die {i+1} is a crit. Would you like to roll again?")
-                        self.scrollPrint("1. Yes   2. No")
-                        inp = self.getInput(["1", "2"])
-                        if inp == "1":
-                            diceRoll = random.randint(1, 6)
-                            rolledDice[i].append(diceRoll)
-                            i = 0
+            rolledDice = self.critFunc(rolledDice)
+            #############while self.critCheck(rolledDice):
+            #############    for i in range(0, len(rolledDice)):
+            #############        if rolledDice[i][len(rolledDice[i]) - 1] == 6:
+            #############            self.scrollPrint(f"Die {i+1} is a crit. Would you like to roll again?")
+            #############            self.scrollPrint("1. Yes   2. No")
+            #############            inp = self.getInput(["1", "2"])
+            #############            if inp == "1":
+            #############                diceRoll = random.randint(1, 6)
+            #############                rolledDice[i].append(diceRoll)
+            #############                i = 0
 
-                        else:
-                            rolledDice[i].append(0)
+            #############            else:
+            #############                rolledDice[i].append(0)
 
-                        self.scrollPrint(rolledDice)
+            #############            self.scrollPrint(rolledDice)
+
+            #Feats
+            while True:
+                if self.hp >= 2:
+                    self.scrollPrint(f"You have the health ({self.hp})! Would you like to attempt a feat? (-2 health/re-roll)")
+                    print("1. Yes   2. No")
+                    inp = self.getInput(["1", "2"])
+                    if inp == "1":
+                        self.addHP(-2)
+                        self.scrollPrint("Which die would you like to reroll?")
+                        allowedNums = []
+                        for i in range(0, len(rolledDice)):
+                            allowedNums.append(str(i + 1))
+                            print(f"{i+1}. {rolledDice[i]}")
+                        inp2 = self.getInput(allowedNums)
+                        diceRoll = random.randint(1, 6)
+                        #print(rolledDice[eval(inp2) - 1][len(rolledDice[eval(inp2) - 1]) - 1])
+                        rolledDice[eval(inp2) - 1][len(rolledDice[eval(inp2) - 1]) - 1] = diceRoll
+                        self.scrollPrint(f"New Results: {rolledDice}")
+                        rolledDice = self.critFunc(rolledDice)
+
+                    else:
+                        break
+                else:
+                    break
+
 
             #Add Values Together
             sumDamage = 0
