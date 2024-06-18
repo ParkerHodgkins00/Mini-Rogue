@@ -69,7 +69,7 @@ class Player_C(object):
     def scrollPrint(self, s):
         for ch in s:
             time.sleep(0.03)
-            print(ch, end='')
+            print(ch, end='', flush=True)
             
         print("")
     

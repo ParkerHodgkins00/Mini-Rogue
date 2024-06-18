@@ -11,7 +11,7 @@ def clearScreen():
 def scrollPrint(s):
     for ch in s:
         time.sleep(0.03)
-        print(ch, end='')
+        print(ch, end='', flush=True)
         
     print('')
     
