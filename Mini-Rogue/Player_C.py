@@ -34,13 +34,15 @@ class Player_C(object):
             1: 2,
             2: 3,
             3: 4,
-            4: 5
+            4: 5,
+            5: 0
         }
         self.levelToCoinBoss = {
             1: 2,
             2: 2,
             3: 3,
-            4: 3
+            4: 3,
+            5: 0
         }
         self.roomBelow = {
             1: 3,
@@ -689,7 +691,7 @@ class Player_C(object):
         if self.hp > 0:
             self.scrollPrint("YOU'VE WON!!!!")
             time.sleep(self.stallTime)
-            if self.bossRoom == False:
+            if self.bossRoom == False and self.level != 14:
                 self.addXP(self.levelToXPBase[self.level])
                 self.scrollPrint(f"You Receive {self.levelToXPBase[self.level]} XP")
                 
