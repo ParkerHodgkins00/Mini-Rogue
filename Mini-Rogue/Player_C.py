@@ -507,10 +507,15 @@ class Player_C(object):
                 if self.level == 5:
                     self.scrollPrint("Oh Wait... there are no floors below you...")
                     time.sleep(self.stallTime)
-                time.sleep(self.stallTime)
-                self.scrollPrint("Hope you're ready for it!")
+
+                else:
+                    time.sleep(self.stallTime)
+                    self.scrollPrint("Hope you're ready for it!")
+                    
+                    self.level += 1
+                    self.room = self.roomBelow[self.room]
+
                 self.addHP(-2)
-                self.level = self.roomBelow[self.room]
           
         if escapedTrap:
             self.scrollPrint("You Avoided the Trap!!!")
