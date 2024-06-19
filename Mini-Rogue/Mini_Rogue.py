@@ -35,9 +35,11 @@ def healingSpell():
             if player.spell1 == "Healing":
                 scrollPrint("You Feel Rejuvenated. You Gain 8 HP")
                 player.addHP(8)
+                player.spell1 = ""
             elif player.spell2 == "Healing":
                 scrollPrint("You Feel Rejuvenated. You Gain 8 HP")
                 player.addHP(8)
+                player.spell2 = ""
 
             else:
                 scrollPrint("Well this is awkward... apparently you don't have a healing spell???")
