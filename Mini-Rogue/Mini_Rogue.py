@@ -168,8 +168,10 @@ while player.getHP() > 0 and player.room < 15:
         print("You have failed your quest. Good Bye")
         break
 
-    elif player.room > 14:
+    elif player.room >= 14:
         print("Congratulations! You have beaten all 5 bosses!")
+        input("Press Enter To End the Game!")
+        break
     scrollPrint("You've Reached the end of this Area. Well done")
 
 
